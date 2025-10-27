@@ -1,0 +1,2 @@
+things to do:
+the bootloader will load the kernel go to protected mode the jump the kernel

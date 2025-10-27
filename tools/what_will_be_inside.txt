@@ -1,0 +1,2 @@
+this is where files like the makefile will be, createimg.sh, link.ld
+if i dont know remember what this is just google what it is and why it is used

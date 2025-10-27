@@ -1,0 +1,2 @@
+to keep notes like "memory map.txt" where my kernel loads for example 0x1000
+AND "boot_process.md" step by step boot stages
