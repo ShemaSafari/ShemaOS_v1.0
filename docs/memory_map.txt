@@ -1,0 +1,36 @@
+======================================================
+          ShemaOS Real Mode Memory Map
+======================================================
+
+Address Range (Hex)    | Size     | Description
+------------------------------------------------------
+00000h – 003FFh        | 1 KB     | Interrupt Vector Table (IVT)
+00400h – 004FFh        | 256 B    | BIOS Data Area (BDA)
+00500h – 07BFFh        | ~30 KB   | Free / Temporary Memory Area
+07C00h – 07DFFh        | 512 B    | Bootloader (Stage 1)
+07E00h – 08FFFh        | ~4 KB    | Loader (Stage 2)
+09000h – 09FFFh        | 4 KB     | Stack Segment (0x9000:0xFFFF)
+0A000h – 0FFFFh        | 24 KB    | BIOS / Video Memory Reserved
+01000h – 04FFFh        | ~16 KB   | Kernel Load Area (loaded by loader)
+B8000h – B8FA0h        | 4 KB     | VGA Text Video Memory (80x25 screen)
+F0000h – FFFFFh        | 64 KB    | BIOS ROM (system firmware)
+------------------------------------------------------
+    Total conventional RAM: 640 KB (0x00000 – 0x9FFFF)
+======================================================
+
+Boot Sequence:
+--------------
+1. BIOS loads 1st boot sector (boot.asm) → 0x7C00.
+2. boot.asm loads 2nd stage (loader.asm) → 0x7E00.
+3. loader.asm sets up stack at 0x9FFFF.
+4. loader.asm loads kernel (kernel.bin) → 0x2000.
+5. loader.asm enables A20, prepares GDT, and switches to Protected Mode.
+6. CPU jumps to kernel entry point (kernel.asm → kernel.c).
+
+Notes:
+------
+- The stack grows downward from 0x9FFFF.
+- Kernel is loaded starting from 0x2000 (0x1000:0x1000).
+- Memory below 0x0500 is reserved for BIOS structures (do not use).
+- Memory above 0xA000 is video memory and BIOS ROM (do not use).
+- When entering protected mode, the GDT and page tables will be placed in free regions above 0x90000.

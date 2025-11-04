@@ -19,7 +19,7 @@ boot_drive db 0x80
 loading_stage2:
     mov al, 1           ; number of sectors to read
     mov ch, 0           ; number of cylinders
-    mov cl, 2           ; 
+    mov cl, 2           ; read the second sector 
     mov dh, 0           ; head number
     ; mov [boot_drive], dl
     mov dl, [boot_drive]
@@ -44,8 +44,8 @@ error_print:
     jmp error_print
 
 
-message db "Loading_boot..", 0
-error_msg db "Failed_to_locate_boot..", 0
+message db "Loading...", 0x0D, 0x0A, 0
+error_msg db "Failed_to_locate_boot..", 0x0D, 0x0A, 0
 
 times 510 - ($ - $$) db 0
 dw 0xAA55
