@@ -4,7 +4,7 @@ This document describes the complete flow from BIOS power-on to the point where 
 
 ---
 
-## Stage 0 — BIOS (Before our code runs)
+## Stage 0 — BIOS (Before the code runs)
 
 1. The computer powers on.
 2. The BIOS performs the POST (Power-On Self Test).
