@@ -23,14 +23,14 @@ Boot Sequence:
 1. BIOS loads 1st boot sector (boot.asm) → 0x7C00.
 2. boot.asm loads 2nd stage (loader.asm) → 0x7E00.
 3. loader.asm sets up stack at 0x9FFFF.
-4. loader.asm loads kernel (kernel.bin) → 0x2000.
+4. loader.asm loads kernel (kernel.bin) → 0x100000 (1MB).
 5. loader.asm enables A20, prepares GDT, and switches to Protected Mode.
 6. CPU jumps to kernel entry point (kernel.asm → kernel.c).
 
 Notes:
 ------
 - The stack grows downward from 0x9FFFF.
-- Kernel is loaded starting from 0x2000 (0x1000:0x1000).
+- Kernel is loaded starting from 0x10000 (0x1000:0x0000).
 - Memory below 0x0500 is reserved for BIOS structures (do not use).
 - Memory above 0xA000 is video memory and BIOS ROM (do not use).
 - When entering protected mode, the GDT and page tables will be placed in free regions above 0x90000.

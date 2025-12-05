@@ -4,7 +4,7 @@ This document describes the complete flow from BIOS power-on to the point where 
 
 ---
 
-## Stage 0 — BIOS (Before our code runs)
+## Stage 0 — BIOS (Before the code runs)
 
 1. The computer powers on.
 2. The BIOS performs the POST (Power-On Self Test).
@@ -44,7 +44,7 @@ This document describes the complete flow from BIOS power-on to the point where 
 - Enable the A20 line.
 - Load the kernel into memory.
 - Set up the GDt and build it.
-- Eventually switch to protected mode.
+- Eventually switch to protected mode then jump to the kernel.
 
 ### Actions
 1. Disables interrupts (`cli`).
@@ -55,20 +55,21 @@ This document describes the complete flow from BIOS power-on to the point where 
 3. Enables **A20 line** via port `0x92`:
    - Ensures access to memory beyond 1MB.
 4. Loads the kernel from disk:
-   - Loads **4 sectors** starting at **sector 3**.
-   - Stores them at **physical address 0x2000 (0x1000:0x1000)**.
+   - Loads the kernel at **sector 3**.
+   - Stores them at **physical address 0x10000 (0x1000:0x0000)**.
 5. Displays `"kernel_loaded_successfully!"` on screen.
 6. Prepare to jump to the kernel:
    - Build the **GDT**.
    - Load **GDTR**.
    - Set **CR0.PE = 1** to enter protected mode.
-   - Jump to **kernel entry** (kernel.asm).
+   - load again the kernel to **0x00100000 (1mb)**
+   - Jump to **kernel entry** (kernel_entry.asm).
 
 ---
 
-## Stage 3 — Kernel (`kernel.asm` + `kernel.c`)
+## Stage 3 — Kernel (`kernel_entry.asm` + `kernel.c`)
 
-**Loaded at:** `0x1000:0x1000` (physical 0x2000)
+**Loaded at:** `0x00100000:0x0000` (physical 0x00100000)
 
 ### Purpose
 - Take over control after protected mode switch.
@@ -77,8 +78,17 @@ This document describes the complete flow from BIOS power-on to the point where 
 ### Actions
 1. Set up data segments (`ds`, `ss`, `es`, etc.).
 2. Initialize the stack (`esp`).
-3. Call `kmain()` in `kernel.c`.
-4. `kmain()` runs the OS logic (text output, drivers, etc.).
+3. Clears the screen.
+4. Call `kernel_main()` in `kernel.c`.
+5. `kernel_main()` runs the OS logic (text output, drivers, etc.).
+6. Made the VGA driver, we can now print text on the screen.
+7. Setting up interrupt handlers:
+   - Build the **IDT, ISR, IRQ**.
+   - Make the keyboard driver
+   - Make a graphics mode driver
+   - 
+   - 
+   
 
 ---
 

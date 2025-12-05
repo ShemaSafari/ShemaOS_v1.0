@@ -1,7 +1,7 @@
 # Project Documentation: ShemaOS
 
 ## 1. Introduction  
-This is my first attempt at building an operating system. I started this project out of curiosity about how computers work, how they start up, and how much control a user truly has over their machine.  
+This is my first attempt at building an operating system. I started this project cause i wanted to challege myself and also out of curiosity about how computers work, how they start up, and how much control a user truly has over their machine.  
 
 This OS project represents the **first phase of a two-part journey** to eventually build my own computer from the ground up. Currently, I’m focusing on the software side—creating an operating system—since I don’t yet have the materials to build physical hardware. Once this OS is complete and functional, I plan to design and build a **custom physical computer** to house and run it.
 
