@@ -7,7 +7,7 @@
 static uint16_t* vga_buffer = (uint16_t*)0xB8000;
 static uint16_t cursor_x = 0;
 static uint16_t cursor_y = 0;
-static uint8_t color = 0xF0; // white text on black background
+static uint8_t color = 0x07; // white text on black background
 
 static uint16_t make_vga_entry(char c, uint8_t color){
     return (uint16_t) c | ((uint16_t) color << 8);
