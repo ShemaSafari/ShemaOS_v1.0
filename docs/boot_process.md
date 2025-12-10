@@ -86,7 +86,7 @@ This document describes the complete flow from BIOS power-on to the point where 
    - Build the **IDT, ISR, IRQ**.
    - Make the keyboard driver
    - Make a graphics mode driver
-   - 
+   - Make a shell
    - 
    
 

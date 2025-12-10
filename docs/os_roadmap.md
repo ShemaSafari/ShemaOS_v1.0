@@ -28,10 +28,10 @@ This document shows the path i took, my step-by-step plan in building my OS
 
 ✓ -- Made the VGA driver (I can now print text on screen) --
 
-✓ -- Set up the IDT, ISR, IRQ now my OS can handle exceptions and not frick out or crash on incoming interrupts --
+✓ -- Set up the IDT, ISR, IRQ now my OS can handle exceptions and not freak out or crash on incoming interrupts --
 
-☐ -- Impliment the Keyboard driver --
+✓ -- Impliment the Keyboard driver (my OS can now take in keyboard inputs)--
 
-☐ -- Make the Graphics Mode Driver --
+☐ -- Impliment a basic Shell --
 
 ☐ 

@@ -43,9 +43,11 @@ This OS project represents the **first phase of a two-part journey** to eventual
 ---
 
 ## 5. Learning & Research Sources  
-- [OSDev Wiki](https://wiki.osdev.org)  
+- [OSDev Wiki](https://wiki.osdev.org) 
+- [DEV Community](Dev.to)
 - Tutorials on x86 architecture and BIOS interrupts  
 - Low-level programming and kernel development guides  
+
 
 ---
 
