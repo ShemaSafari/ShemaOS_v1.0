@@ -32,6 +32,10 @@ This document shows the path i took, my step-by-step plan in building my OS
 
 ✓ -- Impliment the Keyboard driver (my OS can now take in keyboard inputs)--
 
-☐ -- Impliment a basic Shell --
+✓ -- Impliment a basic Shell (with commands like clear, about, reboot, help and echo)--
 
-☐ 
+☐
+
+☐
+
+☐

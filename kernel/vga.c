@@ -1,3 +1,4 @@
+#include "io.h"
 #include <stdint.h>
 
 #define VGA_MEMORY (uint8_t*)0xb8000
@@ -11,6 +12,25 @@ static uint8_t color = 0x07; // white text on black background
 
 static uint16_t make_vga_entry(char c, uint8_t color){
     return (uint16_t) c | ((uint16_t) color << 8);
+}
+
+void vga_enable_cursor(uint8_t start, uint8_t end){
+    outb(0x3D4, 0x0A);
+    outb(0x3D5, (inb(0x3D5) & 0xC0) | start);
+
+    outb(0x3D4, 0x0B);
+    outb(0x3D5, (inb(0x3D5) & 0xE0) | end);
+}
+
+static void vga_update_cursor(){
+
+    uint16_t pos = cursor_y * VGA_WIDTH + cursor_x;
+
+    outb(0x3D4, 0x0F);
+    outb(0x3D5, (uint8_t) (pos & 0xFF));
+
+    outb(0x3D4, 0x0E);
+    outb(0x3D5, (uint8_t)((pos >> 8) & 0xFF));
 }
 
 static void vga_scroll(){
@@ -44,6 +64,7 @@ void vga_put_char(char c){
         cursor_x = 0;
         cursor_y++;
         vga_scroll();
+        vga_update_cursor();
         return;
     }
 
@@ -54,8 +75,9 @@ void vga_put_char(char c){
         vga_buffer[pos] = make_vga_entry(' ', color);
         if(cursor_x == 0 && cursor_y > 0){
             cursor_y--;
-            cursor_x = VGA_HEIGHT - 1;
+            cursor_x = VGA_WIDTH - 1;
         }
+        vga_update_cursor();
         return;
     }
 
@@ -67,6 +89,7 @@ void vga_put_char(char c){
             cursor_x = 0;
             cursor_y++;
             vga_scroll();
+            vga_update_cursor();
         }
         return;
     }
@@ -78,12 +101,13 @@ void vga_put_char(char c){
 
     // move cursor right
     cursor_x++;
-    if (cursor_x >= VGA_HEIGHT){
+    if (cursor_x >= VGA_WIDTH){
         cursor_x = 0;
         cursor_y++;
     }
 
     vga_scroll();
+    vga_update_cursor();
 }
 
 void print(const char* str){
@@ -100,4 +124,13 @@ void print_hex(uint32_t num) {
         char c = hex_chars[nibble];
         vga_put_char(c);
     }
+}
+
+void clear_screen(){
+    for (int i = 0; i < 80 * 25; i++) {
+        vga_buffer[i] = make_vga_entry(' ', color);
+    }
+    cursor_x = 0;
+    cursor_y = 0;
+    vga_update_cursor();
 }

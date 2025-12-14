@@ -31,6 +31,9 @@ IRQ_O 			:=  $(BUILD_DIR)/irq.o
 KEYBOARD_O 		:=  $(BUILD_DIR)/keyboard.o
 IDT_LOAD_O 		:=  $(BUILD_DIR)/idt_load.o
 IDT_O 			:=  $(BUILD_DIR)/idt.o
+STRING_O        :=  $(BUILD_DIR)/string.o
+SYSTEM_O        :=  $(BUILD_DIR)/system.o
+SHELL_O         :=  $(BUILD_DIR)/shell.o
 KERNEL_ELF 		:=  $(BUILD_DIR)/kernel.elf
 KERNEL_BIN 		:=  $(BUILD_DIR)/kernel.bin
 KERNEL_SECTORS_FILE := $(BUILD_DIR)/kernel_sectors.txt
@@ -89,7 +92,19 @@ $(IDT_O): $(KERNEL_DIR)/idt.c
 	@mkdir -p $(BUILD_DIR)
 	$(GCC) $(CFLAGS) -c $< -o $@
 
-$(KERNEL_ELF): $(KERNEL_ENTRY) $(KERNEL_C) $(VGA_O) $(ISR_STUBS_O) $(ISR_O) $(IRQ_STUBS_O) $(IRQ_O) $(KEYBOARD_O) $(IDT_LOAD_O) $(IDT_O)
+$(STRING_O): $(KERNEL_DIR)/string.c
+	@mkdir -p $(BUILD_DIR)
+	$(GCC) $(CFLAGS) -c $< -o $@
+
+$(SYSTEM_O): $(KERNEL_DIR)/system.c
+	@mkdir -p $(BUILD_DIR)
+	$(GCC) $(CFLAGS) -c $< -o $@
+
+$(SHELL_O): $(KERNEL_DIR)/shell.c
+	@mkdir -p $(BUILD_DIR)
+	$(GCC) $(CFLAGS) -c $< -o $@
+
+$(KERNEL_ELF): $(KERNEL_ENTRY) $(KERNEL_C) $(VGA_O) $(ISR_STUBS_O) $(ISR_O) $(IRQ_STUBS_O) $(IRQ_O) $(KEYBOARD_O) $(IDT_LOAD_O) $(IDT_O) $(STRING_O) $(SYSTEM_O) $(SHELL_O)
 	$(GCC) $(LDFLAGS) $^ -o $@
 
 $(KERNEL_BIN): $(KERNEL_ELF)

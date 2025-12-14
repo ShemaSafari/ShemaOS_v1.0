@@ -3,7 +3,9 @@
 #include "irq.h"
 #include "vga.h"
 #include "io.h"
+#include "shell.h"
 #include <stdint.h>
+
 
 // Simple keyboard state
 static uint8_t shift_pressed = 0;
@@ -51,15 +53,7 @@ void keyboard_handler(registers_t *regs) {
         case KEY_CAPSLOCK:
             caps_lock = !caps_lock;
             return;
-        case KEY_ENTER:
-            print("\n");
-            return;
-        case KEY_BACKSPACE:
-            print("\b \b");
-            return;
-        case KEY_TAB:
-            print("    ");
-            return;
+
     }
     
     // Convert scancode to ASCII
@@ -72,8 +66,7 @@ void keyboard_handler(registers_t *regs) {
     
     char c = use_shift ? keymap_shift[scancode] : keymap_normal[scancode];
     if (c != 0) {
-        char str[2] = {c, '\0'};
-        print(str);
+        shell_handle_char(c);
     }
 }
 
