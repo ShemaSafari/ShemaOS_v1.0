@@ -43,11 +43,12 @@ void shell_handle_char(char c){
 void shell_execute(char *cmd) {
     if (strcmp(cmd, "help") == 0) {
         print(">Commands:\n");
-        print(" help   - list commands\n");
-        print(" clear  - clear screen\n");
-        print(" echo   - print text on screen\n");
-        print(" about  - info about OS\n");
-        print(" reboot - restart system\n");
+        print(" help     -  list commands\n");
+        print(" clear    -  clear screen\n");
+        print(" echo     -  print text on screen\n");
+        print(" about    -  info about OS\n");
+        print(" reboot   -  restart system\n");
+        print(" shutdown -  power off system\n");
         return;
     }
 
@@ -69,6 +70,10 @@ void shell_execute(char *cmd) {
     if (strcmp(cmd, "reboot") == 0) {
         print("\nRebooting system...\n");
         reboot();
+        return;
+    }
+    if (strcmp(cmd, "shutdown") == 0) {
+        shut_down();
         return;
     }
 

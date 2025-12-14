@@ -1,5 +1,6 @@
 #include "system.h"
 #include "io.h"
+#include "vga.h"
 #include <stdint.h>
 
 void reboot(){
@@ -12,4 +13,15 @@ void reboot(){
 
     // If the reboot doesn't happen, halt the CPU
     __asm__ volatile("hlt"); 
+}
+
+void shut_down(){
+    print("Shutting down...\n");
+
+    // use qemu shutdown port
+    outw(0x604, 0x2000); // qemu port 0x604 method
+
+    while(1) {
+        __asm__ volatile("hlt"); // halt CPU if shutdown fails
+    }
 }
