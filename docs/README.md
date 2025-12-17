@@ -1,5 +1,10 @@
 # Project Documentation: ShemaOS
 
+     A custom x86 operating system built from scratch
+
+## Screenshot
+![ShemaOS Shell Running in QEMU](media/shemaos-shell.png)
+
 ## 1. Introduction  
 This is my first attempt at building an operating system. I started this project cause i wanted to challege myself and also out of curiosity about how computers work, how they start up, and how much control a user truly has over their machine.  
 
